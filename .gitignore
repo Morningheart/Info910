@@ -10,6 +10,12 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+/node/node_modules
+/node/package-lock.json
+/node/dist/*
+/node/.idea/*
+.env
+/node/.env
 
 # IDEs and editors
 .idea/
@@ -20,7 +26,8 @@ yarn-error.log
 .settings/
 
 # Miscellaneous
-/.angular/cache
+Front-UI/.angular/cache
+Front-UI/node_modules
 .sass-cache/
 /connect.lock
 /coverage
@@ -29,11 +36,3 @@ testem.log
 /typings
 
 .vercel
-
-/node/node_modules
-/node/package-lock.json
-/node/dist/*
-/node/.idea/*
-
-.env
-/node/.env
