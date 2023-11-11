@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: info910-bdd-service
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: info910-bdd
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: info910-bdd-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: info910-bdd-deploy
+spec:
+  selector:
+    matchLabels:
+      app: info910-bdd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: info910-bdd
+    spec:
+      containers:
+        - image: mysql
+          name: bdd
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: info910-bdd
+                  key: root_password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: info910-bdd
+                  key: database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: info910-bdd
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: info910-bdd
+                  key: user_password
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: info910-bdd-storage
+          args:
+            - --default-authentication-plugin=mysql_native_password
+            - --character-set-server=utf8mb4
+      restartPolicy: Always
+      volumes:
+        - name: info910-bdd-storage
+          persistentVolumeClaim:
+            claimName: info910-bdd-pvc
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config

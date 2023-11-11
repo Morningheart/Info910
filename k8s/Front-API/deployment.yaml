@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: info910-front-service
+spec:
+  type: NodePort
+  ports:
+    - name: info910-front-port
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: info910-front
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: info910-front-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: info910-front
+  template:
+    metadata:
+      labels:
+        app: info910-front
+    spec:
+      containers:
+        - name: info910-front
+          image: morningheart/info910-front:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

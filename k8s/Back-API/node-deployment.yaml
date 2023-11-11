@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: info910-node-service
+spec:
+  ports:
+    - port: 81
+      targetPort: 8081
+  selector:
+    app: info910-node
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: info910-node-deploy
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: info910-node
+  template:
+    metadata:
+      labels:
+        app: info910-node
+    spec:
+      containers:
+      - image: morningheart/info910-back:latest
+        name: info910-node
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: info910-bdd
+                key: root_password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: info910-bdd
+                key: database
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: info910-bdd
+                key: user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: info910-bdd
+                key: user_password
+          - name: HOST
+            value: "info910-bdd-service"
+          - name: IP
+            value: info910-node
+          - name: isHTTPS
+            value: "false"
+        ports:
+        - containerPort: 8081
+      restartPolicy: Always
