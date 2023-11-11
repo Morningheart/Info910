@@ -6,16 +6,19 @@
 /out-tsc
 /bazel-out
 
+# Vercel
+.vercel
+
 # Node
 /node_modules
 npm-debug.log
 yarn-error.log
-/node/node_modules
-/node/package-lock.json
-/node/dist/*
-/node/.idea/*
+/Back-API/node_modules
 .env
-/node/.env
+
+# Angular
+Front-UI/.angular
+Front-UI/node_modules
 
 # IDEs and editors
 .idea/
@@ -26,8 +29,6 @@ yarn-error.log
 .settings/
 
 # Miscellaneous
-Front-UI/.angular/cache
-Front-UI/node_modules
 .sass-cache/
 /connect.lock
 /coverage
@@ -35,4 +36,4 @@ Front-UI/node_modules
 testem.log
 /typings
 
-.vercel
+
