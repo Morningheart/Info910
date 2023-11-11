@@ -1,0 +1,14 @@
+<div class="relative flex flex-col justify-center h-screen overflow-hidden">
+  <div class="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-lg">
+    <h1 class="text-3xl font-semibold text-center text-purple-700">Info910</h1>
+    <div>
+      <label class="label">
+        <span class="text-base label-text">API</span>
+      </label>
+      <input type="text" placeholder="BDD Result" disabled class="w-full input input-bordered input-primary" [value]="resApi"/>
+    </div>
+    <div class="flex justify-center pt-5">
+      <app-test (event)="update($event)"></app-test>
+    </div>
+  </div>
+</div>
