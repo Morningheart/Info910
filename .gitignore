@@ -10,10 +10,10 @@
 .vercel
 
 # Node
-/node_modules
 npm-debug.log
 yarn-error.log
-/Back-API/node_modules
+Back-API/node_modules
+Back-API/*.js
 .env
 
 # Angular
