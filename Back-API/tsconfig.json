@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "declaration": true,
+      "declarationMap": true,
+      "outDir": "./lib",
+      "strict": true,
+      "moduleResolution": "Node",
+      "esModuleInterop": true
+    },
+    "include": [
+      "module",
+      "express",
+      "express/module",
+      "bdd",
+      "bdd/module"
+    ],
+    "exclude": [
+      "node_modules",
+
+    ]
+  }
+  
